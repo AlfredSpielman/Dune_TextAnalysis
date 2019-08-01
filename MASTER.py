@@ -1,6 +1,8 @@
 from os import listdir, getcwd
 from os.path import isfile, join
-import epub
+import pandas as pd
 
-epub_dir = getcwd() + r"\epub"
-epub_files = [f for f in listdir(epub_dir) if isfile(join(epub_dir, f))]
+book_dir = getcwd() + r"\excel"
+books = [join(book_dir, f) for f in listdir(book_dir) if isfile(join(book_dir, f))]
+
+D1 = pd.read_excel(books[0])
