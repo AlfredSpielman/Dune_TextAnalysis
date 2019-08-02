@@ -9,17 +9,17 @@ Set on the desert planet Arrakis, *Dune* is the story of the boy Paul Atreides, 
 
 <div align="center">
     <img src="/covers/D1.jpeg" alt="D1"
-        title="Dune" width="84" height="150" />
+        title="Dune" width="112" height="200" />
     <img src="/covers/D2.jpg" alt="D2"
-        title="Dune Messiah" width="84" height="150" />
+        title="Dune Messiah" width="112" height="200" />
     <img src="/covers/D3.jpg" alt="D3"
-        title="Children of Dune" width="84" height="150" />
+        title="Children of Dune" width="112" height="200" />
     <img src="/covers/D4.jpg" alt="D4"
-        title="God Emperor of Dune" width="84" height="150" />
+        title="God Emperor of Dune" width="112" height="200" />
     <img src="/covers/D5.jpg" alt="D5"
-        title="Heretics of Dune" width="84" height="150" />
+        title="Heretics of Dune" width="112" height="200" />
     <img src="/covers/D6.jpg" alt="D6"
-        title="Chapterhouse: Dune" width="84" height="150" />
+        title="Chapterhouse: Dune" width="112" height="200" />
 </div>
 
 ## Built With
