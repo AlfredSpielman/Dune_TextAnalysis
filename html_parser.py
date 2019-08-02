@@ -13,5 +13,3 @@ title = soup.title.string
 paragraph = []
 for i in soup.find_all('p'):
     paragraph.append(i)
-
-df_paragraph = pd.DataFrame(paragraph)
