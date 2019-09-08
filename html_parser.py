@@ -31,8 +31,12 @@ class_dictionary = {
 
 text_part = {}
 df_Dune = pd.DataFrame(columns=[
-    "class_type",
+    "volume",
+    "book",
+    "paragraph"
+    "part",
     "text",
+    "character"
 ])
 
 def ExtractText(text):
@@ -55,7 +59,5 @@ def ExtractText(text):
     s = re.sub("<p class=.*>", "", s)       # Remove class openings 
     s = re.sub("</p>", "", s)               # Remove class endings
     s = re.sub("<a id=.*>", "", s)          # Remove id="page." references
-
-    df_Dune.append(text_part[i], s)
     
-    return df_Dune;
+    return s;
