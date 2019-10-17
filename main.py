@@ -52,13 +52,28 @@ df_book_long = pd.DataFrame(book_condensed, columns=["part","content"])
 
 # Get running count, concatenation and filtering column
 df_book_long['content'] = df_book_long['content'] + ' '
-df_book_long['count'] = df_book_long.groupby(df_book_long.part.ne('').cumsum()).cumcount() + 1
+df_book_long['chapter_count'] = df_book_long.groupby(df_book_long.part.eq('opening_caption').cumsum()).cumcount() + 1
+df_book_long['line_count'] = df_book_long.groupby(df_book_long.part.ne('').cumsum()).cumcount() + 1
 df_book_long['text_content'] = df_book_long.groupby(df_book_long.part.ne('').cumsum()).content.apply(lambda x : x.cumsum())
-df_book_long['take'] = df_book_long['count'] == df_book_long.groupby(df_book_long.part.ne('').cumsum())['count'].transform('max')
+df_book_long['take'] = df_book_long['line_count'] == df_book_long.groupby(df_book_long.part.ne('').cumsum())['line_count'].transform('max')
 df_book_long['text_part'] = df_book_long.groupby(df_book_long.part.ne('').cumsum()).part.apply(lambda x : x.cumsum())
 
-# Create final DataFrame with the relevant data
 df_book = df_book_long[df_book_long['take'] == True].reset_index()
-df_book = df_book[['text_part', 'text_content']]
+df_book = df_book[['text_part', 'text_content', 'chapter_count']]
 
-df_book.to_csv(index=False)
+df_book['chapter_start'] = df_book['chapter_count'].apply(lambda x : x == 1)
+df_book['chapter_num'] = df_book['chapter_start']
+df_book['chapter_num'].replace({True:1, False:0}, inplace=True)
+df_book['chapter'] = df_book.chapter_num.cumsum() -1
+
+df_book = df_book[['chapter', 'text_part', 'text_content']]
+
+df_book['chapter_shift'] = df_book['chapter'].shift(2).ffill()
+df_book['chapter_n'] = ((df_book['chapter']-df_book['chapter_shift'])>0) & (df_book['text_part'] == "opening_text")
+
+#if df_book['chapter_n'] is True:
+#    df_book['corect_text_part'] = 'text_content'
+#else:
+#    df_book['corect_text_part'] = df_book['text_part'] 
+
+df_book.to_csv(r'output/D1.csv', index=False)
