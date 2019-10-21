@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import re
+import numpy as np
 from StringFunctions import PartOfText, ExtractText
 
 source = r"..\html"
@@ -59,21 +60,34 @@ df_book_long['take'] = df_book_long['line_count'] == df_book_long.groupby(df_boo
 df_book_long['text_part'] = df_book_long.groupby(df_book_long.part.ne('').cumsum()).part.apply(lambda x : x.cumsum())
 
 df_book = df_book_long[df_book_long['take'] == True].reset_index()
-df_book = df_book[['text_part', 'text_content', 'chapter_count']]
+df_book = df_book[['text_part', 'content', 'chapter_count']]
 
 df_book['chapter_start'] = df_book['chapter_count'].apply(lambda x : x == 1)
 df_book['chapter_num'] = df_book['chapter_start']
 df_book['chapter_num'].replace({True:1, False:0}, inplace=True)
 df_book['chapter'] = df_book.chapter_num.cumsum() -1
+df_book['chapter'] = df_book['chapter'].shift(-1).ffill()
 
-df_book = df_book[['chapter', 'text_part', 'text_content']]
+df_book = df_book[['chapter', 'text_part', 'content']][1:]
 
-df_book['chapter_shift'] = df_book['chapter'].shift(2).ffill()
-df_book['chapter_n'] = ((df_book['chapter']-df_book['chapter_shift'])>0) & (df_book['text_part'] == "opening_text")
+df_book['opening_caption'] = df_book['content'].str[0] == "—"
 
-#if df_book['chapter_n'] is True:
-#    df_book['corect_text_part'] = 'text_content'
-#else:
-#    df_book['corect_text_part'] = df_book['text_part'] 
+df_book['text_content'] = df_book['opening_caption'].shift(-2).ffill() != False
+df_book['opening_text'] = df_book['opening_caption'].shift(-1).ffill() != False
+df_book['text_content'] = df_book['opening_caption'].shift(1).ffill() != False
 
-df_book.to_csv(r'output/D1.csv', index=False)
+text_content_arr = np.where(df_book['text_content'] == True)
+for i in text_content_arr:
+    df_book['text_part'].iloc[i] = 'text_content'
+
+opening_caption_arr = np.where(df_book['opening_caption'] == True)
+for i in opening_caption_arr:
+    df_book['text_part'].iloc[i] = 'opening_caption'
+
+opening_text_arr = np.where(df_book['opening_text'] == True)
+for i in opening_text_arr:
+    df_book['text_part'].iloc[i] = 'opening_text'
+
+df_book.to_csv(r'output/D1.csv',
+            index=False,
+            columns=['chapter', 'text_part', 'content'])
