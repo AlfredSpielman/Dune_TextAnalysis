@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\output"
   ],
-  "SelectedNode": "\\.ipynb_checkpoints",
+  "SelectedNode": "\\main.py",
   "PreviewInSolutionExplorer": false
 }

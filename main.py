@@ -88,6 +88,8 @@ opening_text_arr = np.where(df_book['opening_text'] == True)
 for i in opening_text_arr:
     df_book['text_part'].iloc[i] = 'opening_text'
 
+df_book['paragraph'] = df_book.groupby(df_book.opening_text.eq(True).cumsum()).cumcount() + 1
+
 df_book.to_csv(r'output/D1.csv',
             index=False,
-            columns=['chapter', 'text_part', 'content'])
+            columns=['chapter', 'paragraph', 'text_part', 'content'])
