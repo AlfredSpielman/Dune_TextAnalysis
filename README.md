@@ -30,11 +30,11 @@ worth killing for...."
 
 ## Developed with
 
-  * [Anaconda Distribution](https://www.anaconda.com/distribution/) - The World's Most Popular Python/R Data Science Platform
-  * [Jupyter Notebook](https://jupyter.org/) - great tool for data science code development
-  * [Visual Studio 2019](https://visualstudio.microsoft.com/vs/) - source code editor developed by Microsoft
-  * [Tableau Public](https://public.tableau.com/profile/bartosz.nowakowski#!/) - tool I use to create awesome visualizations
+* [Anaconda Distribution](https://www.anaconda.com/distribution/) - The World's Most Popular Python/R Data Science Platform
+* [Jupyter Notebook](https://jupyter.org/) - great tool for data science code development
+* [Visual Studio 2019](https://visualstudio.microsoft.com/vs/) - source code editor developed by Microsoft
+* [Tableau Public](https://public.tableau.com/profile/bartosz.nowakowski#!/) - tool I use to create awesome visualizations
 
 ## Author
 
-  * **Bartosz Nowakowski** - [LinkedIn](https://www.linkedin.com/in/bnowakowski/), [Tableau Public](https://public.tableau.com/profile/bartosz.nowakowski#!/)
+* **Bartosz Nowakowski** - [LinkedIn](https://www.linkedin.com/in/bnowakowski/), [Tableau Public](https://public.tableau.com/profile/bartosz.nowakowski#!/)
