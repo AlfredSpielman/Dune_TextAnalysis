@@ -45,18 +45,18 @@ for Book in range(1, 9): # Main loop over each book
                 if Class == ChapterStarters[Book]: Chapter += 1
                 DuneCronicles.append([Book, Chapter, Class, Text])
 
-dfBook = pd.DataFrame(data=DuneCronicles, columns=['Book','Chapter','Class','Text'])
+dfDuneCronicles = pd.DataFrame(data=DuneCronicles, columns=['Book','Chapter','Class','Text'])
 
-Duplicates, EmptyLines = [], []
-for row, value in enumerate(DuneCronicles):
+Duplicates, EmptyLines  = [], []
+for row in range(0, len(DuneCronicles)): # range --> enumerate
     # List to handle duplicates in Book 1 where 'blockquote' is a parent to 'noindent'
     # which causes duplicate record for chapter opening quotes
-    if (value[0] == 1 or value[0] == 8) and value[2] == 'blockquote':
+    if (DuneCronicles[row][0] == 1 or DuneCronicles[row][0] == 8) and DuneCronicles[row][2] == 'blockquote':
         Duplicates.append(True)
     else:
         Duplicates.append(False)
     # Empty lines at the begining of each chapter in Book 7 & 8
-    if value[2][:5] == 'image' or value[2] == 'linespace' or value[2] == 'right-para' or value[2] == 'center-para':
+    if DuneCronicles[row][2][:5] == 'image' or DuneCronicles[row][2] == 'linespace' or DuneCronicles[row][2] == 'right-para' or DuneCronicles[row][2] == 'center-para' or DuneCronicles[row][2] == 'linegroup':
         EmptyLines.append(True)
     else:
         EmptyLines.append(False)
@@ -64,11 +64,18 @@ for row, value in enumerate(DuneCronicles):
 Duplicates.insert(0, False)
 Duplicates = Duplicates[0:len(Duplicates)-1]
 
-dfBook['Duplicates'] = Duplicates
-dfBook['EmptyLines'] = EmptyLines
+dfDuneCronicles['Duplicates'] = Duplicates
+dfDuneCronicles['EmptyLines'] = EmptyLines
 
-dfBook = dfBook[dfBook['Duplicates'] == False] # Remove duplicates from Book 1
-dfBook = dfBook[dfBook['EmptyLines'] == False] # Remove empty lines from Book 7 & 8
-dfBook.reset_index(drop=True, inplace=True)
+dfDuneCronicles = dfBook[dfBook['Duplicates'] == False] # Remove duplicates from Book 1
+dfDuneCronicles = dfBook[dfBook['EmptyLines'] == False] # Remove empty lines from Book 7 & 8
+dfDuneCronicles.reset_index(drop=True, inplace=True)
 
-dfBook[['Book','Chapter','Class','Text']].to_csv('output\DuneCronicles.csv', index=False, encoding='utf-8')
+Class_Identifiers = pd.read_excel('data\Class_Identifiers.xlsx')
+
+dfDuneCronicles = dfBook.merge(Class_Identifiers,
+             how='left',
+             on=['Book','Class'],
+             sort=False)
+
+dfDuneCronicles[['Book','Chapter','Class','Identifier_A','Identifier_B','Text']].to_csv('output\DuneCronicles.csv', index=False, encoding='utf-8')
