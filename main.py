@@ -37,26 +37,26 @@ for Book in range(1, 9): # Main loop over each book
     for html_file in Dune: # Main loop over each chapter
         with open(html_file, encoding="utf8") as markup:
             soup = BeautifulSoup(markup, 'html.parser')
-        
+
             AllParagraphs = soup.body.find_all(['p', 'blockquote'])
-            for paragraph in range(0, len(AllParagraphs)):
-                Class = AllParagraphs[paragraph].attrs['class'][0]
-                Text = AllParagraphs[paragraph].get_text().replace('\n        ', '').replace('\n', '').replace('  ', ' ').replace('  ', ' ') #?!
+            for row, paragraph in enumerate(AllParagraphs):
+                Class = paragraph.attrs['class'][0]
+                Text = paragraph.get_text().replace('\n        ', '').replace('\n', '').replace('  ', ' ').replace('  ', ' ') #?!
                 if Class == ChapterStarters[Book]: Chapter += 1
                 DuneCronicles.append([Book, Chapter, Class, Text])
 
 dfBook = pd.DataFrame(data=DuneCronicles, columns=['Book','Chapter','Class','Text'])
 
 Duplicates, EmptyLines = [], []
-for row in range(0, len(DuneCronicles)):
+for row, value in enumerate(DuneCronicles):
     # List to handle duplicates in Book 1 where 'blockquote' is a parent to 'noindent'
     # which causes duplicate record for chapter opening quotes
-    if (DuneCronicles[row][0] == 1 or DuneCronicles[row][0] == 8) and DuneCronicles[row][2] == 'blockquote':
+    if (value[0] == 1 or value[0] == 8) and value[2] == 'blockquote':
         Duplicates.append(True)
     else:
         Duplicates.append(False)
     # Empty lines at the begining of each chapter in Book 7 & 8
-    if DuneCronicles[row][2][:5] == 'image' or DuneCronicles[row][2] == 'linespace' or DuneCronicles[row][2] == 'right-para' or DuneCronicles[row][2] == 'center-para':
+    if value[2][:5] == 'image' or value[2] == 'linespace' or value[2] == 'right-para' or value[2] == 'center-para':
         EmptyLines.append(True)
     else:
         EmptyLines.append(False)
