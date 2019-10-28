@@ -3,9 +3,15 @@
 I want to deep dive into my favourite Science Fiction book series [***Dune***](https://en.wikipedia.org/wiki/Dune_(franchise)) by Frank Herber (6 volumes with continuation of last 2 by Brian Herber and Kevin J. Aderson) in order to strenghten my skills in text analysis with Python.
 
 ## Dune
-**Frank Herbert’s classic masterpiece—a triumph of the imagination and one of the bestselling science fiction novels of all time — nominated as one of America’s best-loved novels by PBS’s The Great American Read.**
+**Frank Herbert’s classic masterpiece—a triumph of the imagination and
+one of the bestselling science fiction novels of all time — nominated
+as one of America’s best-loved novels by PBS’s The Great American Read.**
 
-Set on the desert planet Arrakis, *Dune* is the story of the boy Paul Atreides, heir to a noble family tasked with ruling an inhospitable world where the only thing of value is the “spice” melange, a drug capable of extending life and enhancing consciousness. Coveted across the known universe, melange is a prize worth killing for....
+"Set on the desert planet Arrakis, *Dune* is the story of the boy Paul Atreides,
+heir to a noble family tasked with ruling an inhospitable world where the only
+thing of value is the “spice” melange, a drug capable of extending life and
+enhancing consciousness. Coveted across the known universe, melange is a prize
+worth killing for...."
 
 <div align="center">
     <img src="/covers/D1.jpeg" alt="D1"
@@ -22,17 +28,13 @@ Set on the desert planet Arrakis, *Dune* is the story of the boy Paul Atreides, 
         title="Chapterhouse: Dune" width="112" height="200" />
 </div>
 
-## Built With
+## Developed with
 
-* [Anaconda Distribution](https://www.anaconda.com/distribution/) - The World's Most Popular Python/R Data Science Platform
-* [Jupyter Notebook](https://jupyter.org/) - great tool for data science code development
-* [Visual Studio 2019](https://visualstudio.microsoft.com/vs/) - source code editor developed by Microsoft
-* [Tableau Public](https://public.tableau.com/profile/bartosz.nowakowski#!/) - tool I use to create awesome visualizations
+  * [Anaconda Distribution](https://www.anaconda.com/distribution/) - The World's Most Popular Python/R Data Science Platform
+  * [Jupyter Notebook](https://jupyter.org/) - great tool for data science code development
+  * [Visual Studio 2019](https://visualstudio.microsoft.com/vs/) - source code editor developed by Microsoft
+  * [Tableau Public](https://public.tableau.com/profile/bartosz.nowakowski#!/) - tool I use to create awesome visualizations
 
 ## Author
 
-* **Bartosz Nowakowski** - [LinkedIn](https://www.linkedin.com/in/bnowakowski/), [Tableau Public](https://public.tableau.com/profile/bartosz.nowakowski#!/)
-
-## License
-
-This project is licensed under the MIT License - see [wiki/MIT_License](https://en.wikipedia.org/wiki/MIT_License) file for details
+  * **Bartosz Nowakowski** - [LinkedIn](https://www.linkedin.com/in/bnowakowski/), [Tableau Public](https://public.tableau.com/profile/bartosz.nowakowski#!/)
