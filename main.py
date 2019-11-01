@@ -1,4 +1,5 @@
 import os
+import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
 
@@ -82,7 +83,7 @@ df_DuneCronicles = df_DuneCronicles[df_DuneCronicles['Duplicates'] == False] # R
 df_DuneCronicles = df_DuneCronicles[df_DuneCronicles['EmptyLines'] == False] # Remove empty lines from Book 7 & 8
 df_DuneCronicles.reset_index(drop=True, inplace=True)
 
-Class_Identifiers = pd.read_excel('data\Class_Identifiers.xlsx')
+Class_Identifiers = pd.read_excel(r'data\Class_Identifiers.xlsx')
 
 df_DuneCronicles = df_DuneCronicles.merge(Class_Identifiers,
              how='left',
@@ -90,7 +91,7 @@ df_DuneCronicles = df_DuneCronicles.merge(Class_Identifiers,
              sort=False)
 
 output_columns = ['Book','Chapter','Class','Identifier_A','Identifier_B','Text']
-output_filename = 'output\DuneCronicles.csv'
+output_filename = r'output\DuneCronicles.csv'
 
 df_DuneCronicles = df_DuneCronicles[output_columns]
 df_DuneCronicles.to_csv(output_filename, index=False, encoding='utf-8')
