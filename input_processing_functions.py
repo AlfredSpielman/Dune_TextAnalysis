@@ -21,6 +21,7 @@ def empty_lines_handler(empty_lines_list, input_row):
 
 
 def text_classification(dune_cronicles, book, chapter, paragraph):
+    # split paragraphs into chapters
     chapter_starters = {
         1: 'blockquote',
         2: 'blockquote1a',

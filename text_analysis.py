@@ -11,7 +11,7 @@ ps = PorterStemmer()
 # Original text
 DuneCronicles = pd.read_csv(r'output\DuneCronicles.csv')
 
-# Converting all letters to lower case and drop empty lines
+# Converting strings to lower case and drop empty lines
 DuneCronicles['Text'] = DuneCronicles['Text'].str.lower()
 DuneCronicles = DuneCronicles.dropna(subset=['Text'])
 

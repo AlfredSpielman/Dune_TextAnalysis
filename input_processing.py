@@ -52,8 +52,8 @@ duplicates_list = duplicates_list[0:len(duplicates_list) - 1]
 df_DuneCronicles['DuplicateLines'] = duplicates_list
 df_DuneCronicles['EmptyLines'] = empty_lines_list
 
-df_DuneCronicles = df_DuneCronicles[df_DuneCronicles['DuplicateLines'] == False]  # Remove duplicates from Book 1
-df_DuneCronicles = df_DuneCronicles[df_DuneCronicles['EmptyLines'] == False]  # Remove empty lines from Book 7 & 8
+df_DuneCronicles = df_DuneCronicles[df_DuneCronicles['DuplicateLines'] == False]
+df_DuneCronicles = df_DuneCronicles[df_DuneCronicles['EmptyLines'] == False]
 df_DuneCronicles.reset_index(drop=True, inplace=True)
 
 Class_Identifiers = pd.read_excel(r'data\Class_Identifiers.xlsx')
