@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 from bs4 import BeautifulSoup
-from input_processing_functions import text_classification, duplicate_handler, empty_lines_handler
 
 source = r"..\html"
 directories = [x[0] for x in os.walk(source)]
@@ -19,11 +18,21 @@ df_Library["path"] = source + "\\" + df_Library["filename"].str[:2] + "\\" + df_
 df_Library["volume"] = df_Library["filename"].str[1]
 df_Library = df_Library[["path", "volume"]]
 
-dune_cronicles = []
+DuneCronicles = []
 
-for book in range(1, 9):  # Main loop over each book
-    Dune = df_Library[df_Library["volume"] == str(book)]["path"]
-    chapter = 0
+ChapterStarters = {
+    1: 'blockquote',
+    2: 'blockquote1a',
+    3: 'extract',
+    4: 'extract',
+    5: 'epigraph',
+    6: 'extracts',
+    7: 'blockquote',
+    8: 'blockquote'}
+
+for Book in range(1, 9):  # Main loop over each book
+    Dune = df_Library[df_Library["volume"] == str(Book)]["path"]
+    Chapter = 0
 
     for html_file in Dune:  # Main loop over each chapter
         with open(html_file, encoding="utf8") as markup:
@@ -31,28 +40,52 @@ for book in range(1, 9):  # Main loop over each book
 
             AllParagraphs = soup.body.find_all(['p', 'blockquote'])
             for row, paragraph in enumerate(AllParagraphs):
-                text_classification(dune_cronicles, book, chapter, paragraph)
+                Class = paragraph.attrs['class'][0]
+                Text = paragraph.get_text().replace(
+                    '\n        ', '').replace(
+                    '\n', '').replace(
+                    '  ', ' ').replace(
+                    '  ', ' ')
+                if Class == ChapterStarters[Book]:
+                    Chapter += 1
+                if Class == 'volume':
+                    Text = str.upper(Text)
+
+                DuneCronicles.append([Book, Chapter, Class, Text])
 
 # Adjust chapter numbers for 1st pages with volume names
-for row, value in enumerate(dune_cronicles):
+for row, value in enumerate(DuneCronicles):
     if value[1] == 0:
-        dune_cronicles[row][1] = 1
+        DuneCronicles[row][1] = 1
 
-df_DuneCronicles = pd.DataFrame(data=dune_cronicles, columns=['Book', 'Chapter', 'Class', 'Text'])
+df_DuneCronicles = pd.DataFrame(data=DuneCronicles, columns=['Book', 'Chapter', 'Class', 'Text'])
 
-duplicates_list, empty_lines_list = [], []
-for row in range(0, len(dune_cronicles)):  # range --> enumerate
-    DuneCronicles_row = dune_cronicles[row]
-    duplicate_handler(duplicates_list, DuneCronicles_row)
-    empty_lines_handler(empty_lines_list, DuneCronicles_row)
+Duplicates, EmptyLines = [], []
+for row in range(0, len(DuneCronicles)):  # range --> enumerate
+    # List to handle duplicates in Book 1 where 'blockquote' is a parent to 'noindent'
+    # which causes duplicate record for chapter opening quotes
+    if (DuneCronicles[row][0] == 1 or DuneCronicles[row][0] == 8) and \
+            DuneCronicles[row][2] == 'blockquote':
+        Duplicates.append(True)
+    else:
+        Duplicates.append(False)
+    # Empty lines at the beginning of each chapter in Book 7 & 8
+    if DuneCronicles[row][2] == 'linespace' or \
+            DuneCronicles[row][2] == 'right-para' or \
+            DuneCronicles[row][2] == 'center-para' or \
+            DuneCronicles[row][2] == 'linegroup' or \
+            DuneCronicles[row][2][:5] == 'image':
+        EmptyLines.append(True)
+    else:
+        EmptyLines.append(False)
 
-duplicates_list.insert(0, False)
-duplicates_list = duplicates_list[0:len(duplicates_list) - 1]
+Duplicates.insert(0, False)
+Duplicates = Duplicates[0:len(Duplicates) - 1]
 
-df_DuneCronicles['DuplicateLines'] = duplicates_list
-df_DuneCronicles['EmptyLines'] = empty_lines_list
+df_DuneCronicles['Duplicates'] = Duplicates
+df_DuneCronicles['EmptyLines'] = EmptyLines
 
-df_DuneCronicles = df_DuneCronicles[df_DuneCronicles['DuplicateLines'] == False]  # Remove duplicates from Book 1
+df_DuneCronicles = df_DuneCronicles[df_DuneCronicles['Duplicates'] == False]  # Remove duplicates from Book 1
 df_DuneCronicles = df_DuneCronicles[df_DuneCronicles['EmptyLines'] == False]  # Remove empty lines from Book 7 & 8
 df_DuneCronicles.reset_index(drop=True, inplace=True)
 
