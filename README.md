@@ -1,6 +1,6 @@
 # Dune Text Analysis
 
-I want to deep dive into my favourite Science Fiction book series [***Dune***](https://en.wikipedia.org/wiki/Dune_(franchise)) by Frank Herber (6 volumes with continuation of last 2 by Brian Herber and Kevin J. Aderson) in order to strenghten my skills in text analysis with Python.
+I want to deep dive into my favourite Science Fiction book series [***Dune***](https://en.wikipedia.org/wiki/Dune_(franchise)) by Frank Herbert (6 volumes with continuation of last 2 by Brian Herber and Kevin J. Aderson) in order to strengthen my skills in text analysis with Python.
 
 ## Dune
 **Frank Herbert’s classic masterpiece—a triumph of the imagination and
