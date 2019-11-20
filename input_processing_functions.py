@@ -11,7 +11,12 @@ def duplicate_handler(duplicates_list, input_row):
 
 def empty_lines_handler(empty_lines_list, input_row):
     # Empty lines at the beginning of each chapter in Book 7 & 8
-    empty_lines_set = {'linespace', 'right-para', 'center-para', 'linegroup'}
+    empty_lines_set = {
+        'linespace',
+        'right-para',
+        'center-para',
+        'linegroup'
+    }
     if input_row[2] in empty_lines_set or input_row[2][:5] == 'image':
         empty_lines_list.append(True)
     else:
@@ -30,7 +35,8 @@ def text_classification(dune_cronicles, book, chapter, paragraph):
         5: 'epigraph',
         6: 'extracts',
         7: 'blockquote',
-        8: 'blockquote'}
+        8: 'blockquote'
+    }
 
     class_name = paragraph.attrs['class'][0]
     text = paragraph.get_text().replace(
